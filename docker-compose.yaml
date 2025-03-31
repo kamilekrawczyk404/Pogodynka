@@ -4,7 +4,7 @@ services:
     container_name: weather_app_backend
     image: backend
     build:
-      context: ./backend
+      context: ./PogodynkaBackend
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
@@ -24,7 +24,7 @@ services:
     container_name: weather_app_frontend
     image: frontend
     build:
-      context: ./frontend
+      context: ./PogodynkaFrontend
       dockerfile: ./Dockerfile
     ports:
       - "3001:3001"
