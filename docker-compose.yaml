@@ -1,0 +1,63 @@
+version: '3.8'
+services:
+  backend:
+    container_name: weather_app_backend
+    image: backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      mysql:
+        condition: service_healthy # Wait for database to be healthy
+    env_file:
+      - ./backend/.env.prod
+    networks:
+      - prisma-network
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    container_name: weather_app_frontend
+    image: frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./frontend:/app
+    networks:
+      - prisma-network
+
+  mysql:
+    container_name: weather_app_db
+    image: 'mysql:8.0'
+    environment:
+      MYSQL_DATABASE: weather-app-db
+      MYSQL_ROOT_PASSWORD: root123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - prisma-network
+
+volumes:
+  mysql_data:
+
+networks:
+  prisma-network:
+    name: prisma-network
