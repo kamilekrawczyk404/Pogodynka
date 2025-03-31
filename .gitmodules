@@ -1,0 +1,6 @@
+[submodule "PogodynkaBackend"]
+	path = PogodynkaBackend
+	url = https://github.com/kamilekrawczyk404/PogodynkaBackend
+[submodule "PogodynkaFrontend"]
+	path = PogodynkaFrontend
+	url = https://github.com/kamilekrawczyk404/PogodynkaFrontend
