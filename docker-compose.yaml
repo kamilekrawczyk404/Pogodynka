@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   backend:
-    container_name: weather_app_backend
+    container_name: backend
     image: backend
     build:
       context: ./PogodynkaBackend
@@ -14,14 +14,15 @@ services:
       mysql:
         condition: service_healthy # Wait for database to be healthy
     env_file:
-      - ./backend/.env.prod
+      - ./PogodynkaBackend/.env.prod
     networks:
       - prisma-network
     volumes:
-      - ./backend:/app
+      - ./PogodynkaBackend:/app
+      - /app/node_modules
 
   frontend:
-    container_name: weather_app_frontend
+    container_name: frontend
     image: frontend
     build:
       context: ./PogodynkaFrontend
@@ -33,12 +34,13 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./frontend:/app
+      - ./PogodynkaFrontend:/app
+      - /app/node_modules
     networks:
       - prisma-network
 
   mysql:
-    container_name: weather_app_db
+    container_name: mysql_weather
     image: 'mysql:8.0'
     environment:
       MYSQL_DATABASE: weather-app-db
