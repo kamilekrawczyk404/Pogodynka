@@ -16,7 +16,7 @@ services:
     env_file:
       - ./PogodynkaBackend/.env.prod
     networks:
-      - prisma-network
+      - weather-forecast
     volumes:
       - ./PogodynkaBackend:/app
       - /app/node_modules
@@ -37,7 +37,7 @@ services:
       - ./PogodynkaFrontend:/app
       - /app/node_modules
     networks:
-      - prisma-network
+      - weather-forecast
 
   mysql:
     container_name: mysql_weather
@@ -55,11 +55,10 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - prisma-network
+      - weather-forecast
 
 volumes:
   mysql_data:
 
 networks:
-  prisma-network:
-    name: prisma-network
+  weather-forecast:
