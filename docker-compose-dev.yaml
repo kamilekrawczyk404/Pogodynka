@@ -6,7 +6,7 @@ services:
     build:
       context: ./PogodynkaBackend
       dockerfile: ./Dockerfile
-    command: ["sh", "-c", "npm run db:deploy && npm run start"]
+    command: ["sh", "-c", "npm run db:deploy && npm run dev"]
     ports:
       - "3000:3000"
     stdin_open: true
